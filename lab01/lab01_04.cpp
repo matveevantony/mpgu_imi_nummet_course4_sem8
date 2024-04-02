@@ -23,7 +23,7 @@ double f_3(double x) {
     return 4 * 3 * 2 * x + 2.4 * 3 * 2;
 }
 
-double root_hord(double a, double b, double eps) {
+double root_tang(double a, double b, double eps) {
     double root = 0;
     cout << "-----" << endl;
     cout << "Отрезок [" << fixed << setprecision(4) << a << ";" << b << "]" << endl;
@@ -96,7 +96,7 @@ int main() {
     for (double a = -B; a < B; a += h) {
         double b = a + h;
         if (f(a) * f(b) < 0) {
-            root_hord(a, b, eps);
+            root_tang(a, b, eps);
         }
     }
     cout << endl;
