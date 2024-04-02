@@ -65,7 +65,7 @@ double root_hord(double a, double b, double eps) {
                     x = x_prev - ((d - x_prev) / (f(d) - f(x_prev))) * f(x_prev);
                 } while (((M1 - m1) / m1) * abs(x - x_prev) > eps);
                 root = x;
-                cout << "Корень: " << x << ". Количество шагов: " << k << "." << endl;
+                cout << "Корень: " << fixed << setprecision(4) << x << ". Количество шагов: " << k << "." << endl;
             } 
             else {
                 cout << "-" << endl;
