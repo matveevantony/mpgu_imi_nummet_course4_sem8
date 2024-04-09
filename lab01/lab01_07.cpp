@@ -1,7 +1,7 @@
 // Лабораторная работа № 1
 // Вариант 12
 //
-// Численное решение уравнения методом итераций (вариант 1)
+// Численное решение уравнения методом итераций (вариант 2)
 
 #include <iostream>
 #include <iomanip>
@@ -67,12 +67,12 @@ double root_iter(double a, double b, double eps) {
                     k++;
                     x_prev = x;
                     if (f_1(a) > 0) {
-                        x = x - f(x) / M1;
+                        x = x - ((2 * f(x)) / (M1 + m1));
                     }
                     else {
-                        x = x + f(x) / M1;
+                        x = x + ((2 * f(x)) / (M1 + m1));
                     }
-                } while (((M1 - m1) / m1) * abs(x - x_prev) > eps);
+                } while (((M1 - m1) / (2 * m1)) * abs(x - x_prev) > eps);
                 root = x;
                 cout << "Корень: " << fixed << setprecision(4) << x << ". Количество шагов: " << k << "." << endl;
             } 
