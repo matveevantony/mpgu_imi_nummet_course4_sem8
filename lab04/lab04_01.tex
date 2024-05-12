@@ -1,0 +1,157 @@
+\documentclass[12pt]{article}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{extsizes}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{icomma}
+\usepackage{indentfirst}
+\usepackage{graphicx,color}
+\usepackage{wrapfig}
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage[bookmarks=true,colorlinks=true,linkcolor=black,citecolor=black]{hyperref}
+
+\usepackage{tikz}
+\usepackage{tkz-euclide}
+\usetikzlibrary{calc, decorations.pathmorphing, decorations.markings}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+
+\definecolor{applegreen}{rgb}{0.55, 0.71, 0.0}
+\definecolor{blue(pigment)}{rgb}{0.2, 0.2, 0.6}
+\definecolor{burntorange}{rgb}{0.8, 0.33, 0.0}
+\definecolor{persianred}{rgb}{0.8, 0.2, 0.2}
+
+\title{Лабораторная работа № 4}
+\author{Матвеев Антон (401 группа)}
+\date{07 мая 2024 года}
+
+\geometry{a4paper, portrait}
+
+\hoffset = -10pt
+\voffset = -29pt
+\textwidth = 480pt
+\textheight = 723pt
+\headsep = 8pt
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textbf{\textit{Численные методы}}}
+\chead{}
+\rhead{\textit{Матвеев Антон (401 группа)}}
+\lfoot{}
+\cfoot{\thepage}
+\rfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\DeclareCaptionLabelFormat{pics}{Рисунок #2}
+\DeclareCaptionFont{picsfont}{\centering \footnotesize \rmfamily \itshape}
+\captionsetup{labelformat=pics,labelsep=period,font=picsfont}
+
+\setlist[enumerate]{noitemsep,nolistsep}
+\setlist[itemize]{noitemsep,nolistsep}
+
+\makeatletter
+\AddEnumerateCounter{\asbuk}{\russian@alph}{щ}
+\makeatother
+
+\makeatletter
+\newenvironment{sqcases}{%
+	\matrix@check\sqcases\env@sqcases
+}{%
+	\endarray\right.%
+}
+\def\env@sqcases{%
+	\let\@ifnextchar\new@ifnextchar
+	\left\lbrack
+	\def\arraystretch{1.2}%
+	\array{@{}l@{\quad}l@{}}%
+}
+\makeatother
+
+\begin{document}
+	\begin{center}
+		\textbf{\large Лабораторная работа № 4}
+		
+		\textbf{\large Дискретный вариант среднеквадратических приближений}
+		
+		\textit{Вариант 12}
+	\end{center}
+	
+	По условию $x=(-1; 0; 1; 2)$, $f=(13,9; 1,1; -10,1; -18,9)$.
+	
+	Найдём приближения функции $f(x)$ многочленами нулевой, первой и второй степени.
+	
+	\begin{enumerate}[label=\asbuk*), leftmargin=35pt]
+		\item $n=0$. Тогда $f\sim P_0(x)=a_0^*$. Можем найти $a_0^*$, решив уравнение $(1, 1)a_0^*=(1, f)$.
+		
+		Воспользовавшись написанной программой, получаем $a_0^*=-3,5$. Т.е. $P_0(x)=-3,5$.
+		
+		$$\|f-P_0(x)\|=\sqrt{\|f\|^2-(1, f)\cdot a_0^*}\approx 24,5894.$$
+		
+		\item $n=1$. Тогда $f\sim P_1(x)=a_0^*+a_1^*x$. Можем найти $a_0^*$ и $a_1^*$, решив систему уравнений
+		$$\begin{cases}
+			(1, 1)a_0^*+(1, x)a_1^*=(1, f), \\
+			(x, 1)a_0^*+(x, x)a_1^*=(x, f).
+		\end{cases}$$
+		
+		Воспользовавшись написанной программой, получаем $a_0^*=1,98$, $a_1^*=-10,96$. Т.е. $P_1(x)=1,98-10,96x$.
+		
+		$$\|f-P_1(x)\|=\sqrt{\|f\|^2-\left((1, f)\cdot a_0^*+(x, f)a_1^*\right)}\approx 2,00798.$$
+		
+		\item $n=2$. Тогда $f\sim P_2(x)=a_0^*+a_1^*x+a_2^*x^2$. Можем найти $a_0^*$, $a_1^*$ и $a_2^*$, решив систему уравнений
+		$$\begin{cases}
+			(1, 1)a_0^*+(1, x)a_1^*+(1, x^2)a_2^*=(1, f), \\
+			(x, 1)a_0^*+(x, x)a_1^*+(x, x^2)a_2^*=(x, f), \\
+			(x^2, 1)a_0^*+(x^2 , x)a_1^*+(x^2, x^2)a_2^*=(x^2, f).
+		\end{cases}$$
+		
+		Воспользовавшись написанной программой, получаем $a_0^*=0,98$, $a_1^*=-11,96$,\linebreak $a_2^*=1$. Т.е. $P_2(x)=0,98-11,96x+x^2$.
+		
+		$$\|f-P_2(x)\|=\sqrt{\|f\|^2-\left((1, f)\cdot a_0^*+(x, f)a_1^*+(x^2, f)a_2^*\right)}\approx 0,178885.$$
+	\end{enumerate}
+	
+	\begin{center}
+		\begin{tikzpicture}
+			\begin{axis}[
+					width=7cm, height=27cm,
+					xmin=-2, xmax=3, ymin=-20, ymax=15,
+					restrict y to domain=-20:15,
+					axis equal, axis lines=middle,
+					xtick={-1, 1, 2},
+					ytick={-18.9, -10.1, 1.1, 13.9},
+					xticklabels={$-1$, $1$, $2$},
+					yticklabels={{$-18,9$}, {$-10,1$}, {}, {\hspace*{-5pt}}},
+					ticklabel style={font=\small, fill=white},
+					set layers = axis on top,
+				]
+				\node[anchor=west, fill=white] at (axis cs: 0,1.1) {\small $1,1$};
+				\node[anchor=west, fill=white] at (axis cs: 0,13.9) {\small $13,9$};
+				\addplot[thick, color=burntorange, domain=-1:2, samples=25]{-3.5};
+				\addplot[thick, color=applegreen, domain=-1:2, samples=50]{1.98-10.96*x};
+				\addplot[thick, color=blue(pigment), domain=-1:2, samples=200]{0.98-11.96*x+x^2};
+				\draw[dashed] (axis cs:-1,-20)--(axis cs:-1,15);
+				\draw[dashed] (axis cs:2,-20)--(axis cs:2,15);
+				\draw[dashed] (axis cs:-1,13.9)--(axis cs:0,13.9);
+				\draw[dashed] (axis cs:0,-10.1)--(axis cs:1,-10.1);
+				\draw[dashed] (axis cs:1,0)--(axis cs:1,-10.1);
+				\draw[dashed] (axis cs:0,-18.9)--(axis cs:2,-18.9);
+				\fill[color=persianred] (axis cs:-1,13.9) circle (2.25pt);
+				\fill[color=persianred] (axis cs:0,1.1) circle (2.25pt);
+				\fill[color=persianred] (axis cs:1,-10.1) circle (2.25pt);
+				\fill[color=persianred] (axis cs:2,-18.9) circle (2.25pt);
+				\node[anchor=south east, outer sep=-2pt] at (axis cs: 0,0) {\small $O$};
+			\end{axis}
+			\node[anchor=north west, outer sep=-2pt] at (5.35,14.45) {\small $x$};
+			\node[anchor=south west, outer sep=-2pt] at (2.4,25.4) {\small $y$};
+			\node[anchor=south west, outer sep=-2pt] at (3.9,11.75) {\small $y=-3,5$};
+			\node[anchor=south west, outer sep=-2pt] at (3.9,0.05) {\small $y=1,98-10,96x$};
+			\node[anchor=south west, outer sep=-2pt] at (3.9,0.6) {\small $y=0,98-11,96x+x^2$};
+		\end{tikzpicture}
+	\end{center}
+\end{document}
